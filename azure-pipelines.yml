@@ -80,9 +80,14 @@ stages:
             displayName: 'Use Python version'
 
           - script: |
+              python -m venv antenv
+              source antenv/bin/activate
+              python -m pip install --upgrade pip
+              pip install setup
+              pip install -r requirements.txt
               DD_AGENT_MAJOR_VERSION=7 DD_API_KEY=077baa4f822d7858a79fe33ed74551f1 DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
             workingDirectory: $(projectRoot)
-            displayName: "Install DD"
+            displayName: "Install DD & flask"
 
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : app-testdd'
